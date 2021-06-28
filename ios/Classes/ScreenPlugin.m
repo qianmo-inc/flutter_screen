@@ -22,6 +22,18 @@
     bool isIdleTimerDisabled =  [[UIApplication sharedApplication] isIdleTimerDisabled];
     result([NSNumber numberWithBool:isIdleTimerDisabled]);
   }
+  else if ([@"openWakeLock" isEqualToString:call.method]) {
+      [[NSOperationQueue mainQueue] addOperationWithBlock:^ {
+         [[UIDevice currentDevice] setProximityMonitoringEnabled:YES];
+       }];
+    result(nil);
+  }
+  else if ([@"closeWakeLock" isEqualToString:call.method]) {
+      [[NSOperationQueue mainQueue] addOperationWithBlock:^ {
+           [[UIDevice currentDevice] setProximityMonitoringEnabled:NO];
+         }];
+      result(nil);
+  }
   else if ([@"keepOn" isEqualToString:call.method]) {
     NSNumber *b = call.arguments[@"on"];
     [[UIApplication sharedApplication] setIdleTimerDisabled:b.boolValue];

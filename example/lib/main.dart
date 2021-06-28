@@ -39,8 +39,8 @@ class _MyAppState extends State<MyApp> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       new Text("Screen is kept on ? "),
-                      new Checkbox(value: _isKeptOn, onChanged: (bool b){
-                        Screen.keepOn(b);
+                      new Checkbox(value: _isKeptOn, onChanged: (bool? b){
+                        Screen.keepOn(b!);
                         setState((){_isKeptOn = b; });
                       })
                     ]
@@ -49,7 +49,13 @@ class _MyAppState extends State<MyApp> {
                   new Slider(value : _brightness, onChanged : (double b){
                     setState((){_brightness = b;});
                     Screen.setBrightness(b);
-                  })
+                  }),
+                  ElevatedButton(onPressed: () {
+                    Screen.openWakeLock();
+                  }, child: Text("打开感应器"),),
+                  ElevatedButton(onPressed: () {
+                    Screen.closeWakeLock();
+                  }, child: Text("关闭感应器"),),
                 ]
             )
         ),
